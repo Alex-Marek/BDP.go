@@ -25,10 +25,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
+	defer file.Close()
 	reader := bitreader.NewReader(file, littleendian)
 
-	//Reads Header
 	Header.ReadHeader(reader)
 
 	//Loop to read through messages
@@ -36,7 +35,7 @@ func main() {
 		PacketType := reader.TryReadUInt8()
 		TickNumber := reader.TryReadSInt32()
 		SlotNumber := reader.TryReadUInt8()
-		fmt.Printf("%s %d\n %s %x\n %s %d\n %s %d\n",
+		fmt.Printf("%s %d\n \t%s %x\n \t%s %d\n \t%s %d\n",
 			"Message Info for Message Number:",
 			count,
 			"Packet Type: ", PacketType,
